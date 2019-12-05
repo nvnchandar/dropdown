@@ -39,8 +39,14 @@ const getGSM = async (masterData, commoditySelectedList, gsmSelectedList) => {
       return true;
     else return false;
   });
-  console.log(gsmSelectedList);
-  console.log(gsmList);
+
+  // console.log(gsmSelectedList);
+  // console.log(gsmList);
+
+  return {
+    gsmSelectedList: gsmSelectedList,
+    gsmList: gsmList
+  };
 };
 
 module.exports = getGSM;
