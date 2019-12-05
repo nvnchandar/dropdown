@@ -3,33 +3,27 @@ const getGSM = async (masterData, commoditySelectedList, gsmSelectedList) => {
   var gsmList = [];
   var gsmKeys = [];
   var commMasterData = {};
-  // console.log(masterData);
-  // Object.keys(masterData).forEach(key => {
-  //   // console.log(masterData[key])
-  //   gsmObjectArray.push(...masterData[key]);
-  // });
 
+  // 1st step: Extract Masterdata related to selected commodity
   commMasterData = await Object.keys(masterData)
     .filter(x => {
-      // console.log(comm.includes(x))
       if (commoditySelectedList.findIndex(y => y.item_value === x) > -1)
         return true;
       else return false;
     })
     .reduce((res, key) => ((res[key] = masterData[key]), res), {});
-  console.log("commMasterData", commMasterData);
-  // console.log(gsmObjectArray)
-  // console.log("gsms")
+
+  // 2nd step: Extract all the gsm object from commodity MatserData
   Object.keys(commMasterData).forEach(key => {
-    // console.log(masterData[key])
     gsmObjectArray.push(...commMasterData[key]);
   });
-  console.log("one", gsmObjectArray);
+
+  // 3rd step: Extract all the gsm keys
   gsmObjectArray.forEach(obj => {
     gsmKeys.push(...Object.keys(obj));
   });
-  // console.log(gsmKeys)
-  // console.log("gsmKeys")
+
+  // 4th step: Remove duplicate gsm keys
   gsmList = await gsmKeys
     .reduce((a, b) => {
       if (a.indexOf(b) < 0) a.push(b);
@@ -38,7 +32,8 @@ const getGSM = async (masterData, commoditySelectedList, gsmSelectedList) => {
     .map((x, i) => {
       return { item_id: i, item_value: x };
     });
-  // console.log(gsmList);
+
+  // 5th step: Form the gsm selected from the available gsm keys.
   gsmSelectedList = await gsmList.filter(x => {
     if (gsmSelectedList.findIndex(y => y.item_value === x.item_value) > -1)
       return true;
