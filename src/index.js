@@ -3,6 +3,7 @@ import * as data1 from "../data1.json";
 import * as data2 from "../data2.json";
 const getGSM = require("./gsm");
 const getCFG = require("./cfg");
+const getCGCMap = require("./cgcMapping");
 
 var masterData = {};
 // console.log("com1", data1);
@@ -25,7 +26,7 @@ var commoditySelectedList = [
 ];
 
 var gsmSelectedList = [
-  { item_id: 0, item_value: "gsm5" },
+  { item_id: 0, item_value: "gsm3" },
   { item_id: 1, item_value: "gsm4" }
 ];
 
@@ -40,8 +41,8 @@ var cfgList = [];
 getGSM(masterData, commoditySelectedList, gsmSelectedList).then(x => {
   gsmList = JSON.parse(JSON.stringify(x.gsmList));
   gsmSelectedList = JSON.parse(JSON.stringify(x.gsmSelectedList));
-  console.log("gsmList", gsmList);
-  console.log("gsmSelectedList", gsmSelectedList);
+  // console.log("gsmList", gsmList);
+  // console.log("gsmSelectedList", gsmSelectedList);
 });
 
 getCFG(
@@ -52,6 +53,18 @@ getCFG(
 ).then(x => {
   cfgList = JSON.parse(JSON.stringify(x.cfgList));
   cfgSelectedList = JSON.parse(JSON.stringify(x.cfgSelectedList));
-  console.log("cfgList", cfgList);
-  console.log("cfgSelectedList", cfgSelectedList);
+  // console.log("cfgList", cfgList);
+  // console.log("cfgSelectedList", cfgSelectedList);
+});
+
+getCGCMap(
+  masterData,
+  commoditySelectedList,
+  gsmSelectedList,
+  cfgSelectedList
+).then(x => {
+  // cfgList = JSON.parse(JSON.stringify(x.cfgList));
+  // cfgSelectedList = JSON.parse(JSON.stringify(x.cfgSelectedList));
+  // // console.log("cfgList", cfgList);
+  // // console.log("cfgSelectedList", cfgSelectedList);
 });
