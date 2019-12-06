@@ -37,6 +37,7 @@ var cfgSelectedList = [
 
 var gsmList = [];
 var cfgList = [];
+var reqComGsmCfgMap = {};
 
 getGSM(masterData, commoditySelectedList, gsmSelectedList).then(x => {
   gsmList = JSON.parse(JSON.stringify(x.gsmList));
@@ -63,8 +64,7 @@ getCGCMap(
   gsmSelectedList,
   cfgSelectedList
 ).then(x => {
-  // cfgList = JSON.parse(JSON.stringify(x.cfgList));
-  // cfgSelectedList = JSON.parse(JSON.stringify(x.cfgSelectedList));
-  // // console.log("cfgList", cfgList);
-  // // console.log("cfgSelectedList", cfgSelectedList);
+  // console.log("one",x);
+  reqComGsmCfgMap = x;
+  // console.log(reqComGsmCfgMap)
 });
