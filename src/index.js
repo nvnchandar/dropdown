@@ -26,8 +26,8 @@ var commoditySelectedList = [
 ];
 
 var gsmSelectedList = [
-  // { item_id: 0, item_value: "gsm3" },
-  // { item_id: 1, item_value: "gsm4" }
+  { item_id: 0, item_value: "gsm3" },
+  { item_id: 1, item_value: "gsm4" }
 ];
 
 var cfgSelectedList = [
@@ -63,4 +63,5 @@ getCGCMap(
   cfgSelectedList
 ).then(x => {
   reqComGsmCfgMap = x;
+  // console.log(reqComGsmCfgMap);
 });

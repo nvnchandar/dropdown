@@ -4,16 +4,20 @@ const getCGCMap = async (
   gsmSelectedList,
   cfgSelectedList
 ) => {
-  async function asyncForEach(array, callback) {
-    for (let index = 0; index < array.length; index++) {
-      await callback(array[index], index, array);
-    }
-  }
+  // async function asyncForEach(array, callback) {
+  //   for (let index = 0; index < array.length; index++) {
+  //     await callback(array[index], index, array);
+  //   }
+  // }
   // console.log("masterdata", masterData)
 
   var reqObj = {};
-
-  if (gsmSelectedList.length > 0) {
+  // 0 step: if no gsm and no cfg
+  if (!(gsmSelectedList.length > 0) && !(cfgSelectedList.length > 0)) {
+    commoditySelectedList.forEach(x => {
+      reqObj[x.item_value] = [];
+    });
+  } else if (gsmSelectedList.length > 0) {
     commoditySelectedList.forEach(x => {
       let commMasterData = masterData[x.item_value];
       // 1st step: Extract array of gsm object for each selected commodity
@@ -42,6 +46,7 @@ const getCGCMap = async (
       reqObj[x.item_value] = commMasterData;
     });
   } else {
+    // 6th step: if no gsm is selected, extract selected cfg's
     var selectedCFGL = cfgSelectedList.map(x => {
       return x.item_value;
     });
@@ -50,19 +55,19 @@ const getCGCMap = async (
       let selectedcommCFGList = [];
       let gsmObj = {};
       masterData[comm.item_value].forEach((gsm, i) => {
+        // 7th step: Extract all cfgs for each selected commodity
         // console.log(comm.item_value,i,Object.values(masterData[comm.item_value][i])[0])
         commCFGList.push(...Object.values(masterData[comm.item_value][i])[0]);
       });
+      // 8th step: Extract selected cfg's belong to each commodity
       selectedcommCFGList = selectedCFGL.filter(x => {
         return commCFGList.includes(x);
       });
-      // console.log("selectedcommCFGList", selectedcommCFGList)
+      // 9th step: Since no GSM selected, assing to DBNULL object.
       gsmObj["DBNULL"] = selectedcommCFGList;
       reqObj[comm.item_value] = gsmObj;
-      // comCFGMap[comm.item_value] = commCFGList;
     });
   }
-  // console.log(reqObj);
   return reqObj;
 };
 
