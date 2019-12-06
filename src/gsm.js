@@ -4,6 +4,8 @@ const getGSM = async (masterData, commoditySelectedList, gsmSelectedList) => {
   var gsmKeys = [];
   var commMasterData = {};
 
+  // console.log("masterdata", masterData)
+
   // 1st step: Extract Masterdata related to selected commodity
   commMasterData = await Object.keys(masterData)
     .filter(x => {

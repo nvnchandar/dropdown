@@ -26,8 +26,8 @@ var commoditySelectedList = [
 ];
 
 var gsmSelectedList = [
-  { item_id: 0, item_value: "gsm3" },
-  { item_id: 1, item_value: "gsm4" }
+  // { item_id: 0, item_value: "gsm3" },
+  // { item_id: 1, item_value: "gsm4" }
 ];
 
 var cfgSelectedList = [
@@ -39,11 +39,11 @@ var gsmList = [];
 var cfgList = [];
 var reqComGsmCfgMap = {};
 
+// console.log("masterdata", masterData)
+
 getGSM(masterData, commoditySelectedList, gsmSelectedList).then(x => {
   gsmList = JSON.parse(JSON.stringify(x.gsmList));
   gsmSelectedList = JSON.parse(JSON.stringify(x.gsmSelectedList));
-  // console.log("gsmList", gsmList);
-  // console.log("gsmSelectedList", gsmSelectedList);
 });
 
 getCFG(
@@ -54,8 +54,6 @@ getCFG(
 ).then(x => {
   cfgList = JSON.parse(JSON.stringify(x.cfgList));
   cfgSelectedList = JSON.parse(JSON.stringify(x.cfgSelectedList));
-  // console.log("cfgList", cfgList);
-  // console.log("cfgSelectedList", cfgSelectedList);
 });
 
 getCGCMap(
@@ -64,7 +62,5 @@ getCGCMap(
   gsmSelectedList,
   cfgSelectedList
 ).then(x => {
-  // console.log("one",x);
   reqComGsmCfgMap = x;
-  // console.log(reqComGsmCfgMap)
 });
