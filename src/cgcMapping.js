@@ -15,18 +15,18 @@ const getCGCMap = async (
   // 0 step: if no gsm and no cfg
   if (!(gsmSelectedList.length > 0) && !(cfgSelectedList.length > 0)) {
     commoditySelectedList.forEach(x => {
-      reqObj[x.item_value] = [];
+      reqObj[x.item_text] = [];
     });
   } else if (gsmSelectedList.length > 0) {
     commoditySelectedList.forEach(x => {
-      let commMasterData = masterData[x.item_value];
+      let commMasterData = masterData[x.item_text];
       // 1st step: Extract array of gsm object for each selected commodity
       commMasterData = commMasterData
         .filter(x => {
           // 2nd step: Filter selected gsms array
           return (
             gsmSelectedList.findIndex(
-              gsm => gsm.item_value === Object.keys(x)[0]
+              gsm => gsm.item_text === Object.keys(x)[0]
             ) > -1
           );
         })
@@ -34,7 +34,7 @@ const getCGCMap = async (
           //  3rd step: In each gsm object, filter the selected cfg's
           let finalCfgList = Object.values(x)[0].filter(cfg => {
             return (
-              cfgSelectedList.findIndex(cfgL => cfgL.item_value === cfg) > -1
+              cfgSelectedList.findIndex(cfgL => cfgL.item_text === cfg) > -1
             );
           });
           let newObj = {};
@@ -43,21 +43,21 @@ const getCGCMap = async (
           return newObj;
         });
       // 5th step: Assign the array of proper gsm/cfg mapping to reqObj.
-      reqObj[x.item_value] = commMasterData;
+      reqObj[x.item_text] = commMasterData;
     });
   } else {
     // 6th step: if no gsm is selected, extract selected cfg's
     var selectedCFGL = cfgSelectedList.map(x => {
-      return x.item_value;
+      return x.item_text;
     });
     await commoditySelectedList.forEach(comm => {
       let commCFGList = [];
       let selectedcommCFGList = [];
       let gsmObj = {};
-      masterData[comm.item_value].forEach((gsm, i) => {
+      masterData[comm.item_text].forEach((gsm, i) => {
         // 7th step: Extract all cfgs for each selected commodity
         // console.log(comm.item_value,i,Object.values(masterData[comm.item_value][i])[0])
-        commCFGList.push(...Object.values(masterData[comm.item_value][i])[0]);
+        commCFGList.push(...Object.values(masterData[comm.item_text][i])[0]);
       });
       // 8th step: Extract selected cfg's belong to each commodity
       selectedcommCFGList = selectedCFGL.filter(x => {
@@ -65,7 +65,7 @@ const getCGCMap = async (
       });
       // 9th step: Since no GSM selected, assing to DBNULL object.
       gsmObj["DBNULL"] = selectedcommCFGList;
-      reqObj[comm.item_value] = gsmObj;
+      reqObj[comm.item_text] = gsmObj;
     });
   }
   return reqObj;

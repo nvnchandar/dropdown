@@ -9,7 +9,7 @@ const getGSM = async (masterData, commoditySelectedList, gsmSelectedList) => {
   // 1st step: Extract Masterdata related to selected commodity
   commMasterData = await Object.keys(masterData)
     .filter(x => {
-      if (commoditySelectedList.findIndex(y => y.item_value === x) > -1)
+      if (commoditySelectedList.findIndex(y => y.item_text === x) > -1)
         return true;
       else return false;
     })
@@ -32,12 +32,12 @@ const getGSM = async (masterData, commoditySelectedList, gsmSelectedList) => {
       return a;
     }, [])
     .map((x, i) => {
-      return { item_id: i, item_value: x };
+      return { item_id: i, item_text: x };
     });
 
   // 5th step: Form the gsm selected from the available gsm keys.
   gsmSelectedList = await gsmList.filter(x => {
-    if (gsmSelectedList.findIndex(y => y.item_value === x.item_value) > -1)
+    if (gsmSelectedList.findIndex(y => y.item_text === x.item_text) > -1)
       return true;
     else return false;
   });
