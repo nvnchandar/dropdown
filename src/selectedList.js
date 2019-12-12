@@ -9,23 +9,24 @@ const getSelectedList = async (rulesData, commodityList) => {
   // console.log("rulesData", rulesData)
 
   // 1st step: Filter the keys from commodity list to get selected comm.
-  commoditySelectedList = commodityList.filter(x => {
+  commoditySelectedList = await commodityList.filter(x => {
     if (Object.keys(rulesData).includes(x.item_text)) return true;
     else return false;
   });
 
   // 2nd step: Extract all the gsm object from rulesData
-  Object.values(rulesData).forEach(x => {
+  await Object.values(rulesData).forEach(x => {
     gsmObjectArray.push(...x);
   });
 
   // 3rd step: Extract all the gsm keys
-  gsmObjectArray.forEach(obj => {
+  await gsmObjectArray.forEach(obj => {
     gsmKeys.push(...Object.keys(obj));
   });
 
   // 4th step: Remove duplicate gsm keys and map as selected gsms.
   gsmSelectedList = await gsmKeys
+    .filter(x => x !== "DBNULL")
     .reduce((a, b) => {
       if (a.indexOf(b) < 0) a.push(b);
       return a;

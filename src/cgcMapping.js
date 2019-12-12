@@ -65,7 +65,9 @@ const getCGCMap = async (
       });
       // 9th step: Since no GSM selected, assing to DBNULL object.
       gsmObj["DBNULL"] = selectedcommCFGList;
-      reqObj[comm.item_text] = gsmObj;
+      let gsmArray = [];
+      gsmArray.push(gsmObj);
+      reqObj[comm.item_text] = gsmArray;
     });
   }
   return reqObj;

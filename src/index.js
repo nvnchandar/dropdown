@@ -36,8 +36,8 @@ var commoditySelectedList = [
 ];
 
 var gsmSelectedList = [
-  { item_id: 0, item_text: "gsm1" },
-  { item_id: 1, item_text: "gsm2" }
+  // { item_id: 0, item_text: "gsm1" },
+  // { item_id: 1, item_text: "gsm2" }
 ];
 
 var cfgSelectedList = [
